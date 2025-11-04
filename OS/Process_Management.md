@@ -45,7 +45,7 @@ CPU는 코드 영역에 저장된 명령어를 하나씩 처리
 즉, 하나의 프로세스는 코드 + 데이터 + 상태 + 문맥(Context) 의 집합이다.
 
 ### 프로세스의 상태
-<img src="./img/process_status.png" align="left"> 
+<img src="./img/Context_Switching_status.PNG" align="left"> 
 
 - 생성(New) : 프로세스가 막 생성된 상태
 - 준비(Ready) : 프로세스가 CPU에 실행되기 위해 대기하는 상태
