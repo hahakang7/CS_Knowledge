@@ -9,10 +9,10 @@ TCP/IP의 목적은 서로 다른 종류의 컴퓨터, 운영체제, 네트워�
 ## TCP/IP 4계층 구조
 | 계층                                       | 역할                      | 대표 프로토콜                     | 데이터 단위                         |
 | ---------------------------------------- | ----------------------- | --------------------------- | ------------------------------ |
-| **L4  응용 계층 (Application Layer)**         | 사용자와 직접 통신              | HTTP, HTTPS, FTP, DNS, SMTP | 메시지(Message)                   |
-| **L3 전송 계층 (Transport Layer)**           | 송신-수신 간 신뢰성, 데이터 흐름 제어  | TCP, UDP                    | 세그먼트(Segment), 데이터그램(Datagram) |
-| **L2 인터넷 계층 (Internet Layer)**           | IP 주소 지정, 라우팅           | IP, ICMP, ARP               | 패킷(Packet)                     |
-| **L1  네트워크 접근 계층 (Network Access Layer)** | 실제 물리 전송 (LAN, Wi-Fi 등) | Ethernet, Wi-Fi, MAC        | 프레임(Frame), 비트(Bit)            |
+| **응용 계층 (Application Layer)**         | 사용자와 직접 통신              | HTTP, HTTPS, FTP, DNS, SMTP | 메시지(Message)                   |
+| **전송 계층 (Transport Layer)**           | 송신-수신 간 신뢰성, 데이터 흐름 제어  | TCP, UDP                    | 세그먼트(Segment), 데이터그램(Datagram) |
+| **인터넷 계층 (Internet Layer)**           | IP 주소 지정, 라우팅           | IP, ICMP, ARP               | 패킷(Packet)                     |
+| **네트워크 접근 계층 (Network Access Layer)** | 실제 물리 전송 (LAN, Wi-Fi 등) | Ethernet, Wi-Fi, MAC        | 프레임(Frame), 비트(Bit)            |
 
 ## 데이터 전송 과정
 TCP/IP의 핵심 개념중 하나는 바로 캡슐화와 디캡슐화 이다.  
@@ -33,7 +33,7 @@ TCP/IP의 핵심 개념중 하나는 바로 캡슐화와 디캡슐화 이다.
 L2프레임 안에 L3패킷이 들어갈수 있고 L3패킷 안에는 L4 Tcp Segment가 들어갈 수 있다.
 그리고 패킷이나 프레임같은 것들을 열어서 안의 Payload를 꺼내는 것을 Decapsulation이라고 한다.
 
-## 응용 계층 (L4)
+## 응용 계층 
 #### 데이터 단위
 - 메시지(Message)
 #### 하는 일
@@ -42,11 +42,12 @@ L2프레임 안에 L3패킷이 들어갈수 있고 L3패킷 안에는 L4 Tcp Seg
 - 표현/세션 기능(인코딩, 압축, 대화 유지 등)을 프로토콜 내부에서 함께 처리하는 경우가 많음
 #### 핵심 메커니즘
 - HTTP: 메서드(GET/POST/PUT/DELETE), 상태코드, 헤더/본문, 캐싱(ETag, Cache-Control)
-- DNS: 이름 → IP 매핑, 재귀/반복 질의, 캐시 TTL
-- HTTP/2/3: 멀티플렉싱, 헤더 압축(HPACK/QPACK), 0-RTT(QUIC)
+- DNS: 이름 → IP 매핑, 재귀/반복 질의, 캐시 TTL(Time-To-Live)   
+- HTTP/2/3: 멀티플렉싱[^1], 헤더 압축(HPACK/QPACK), 0-RTT(QUIC)
 - 보안: TLS(HTTPS), 인증(쿠키/토큰/OAuth), CORS
 
-## 전송 계층 (L3)
+[^1]: 멀티플렉싱은 하나의 연결에서 여러 개의 스트림(요청/응답)을 동시에 실어보내는 기술 HTTP/1.1에서는 멀티플렉싱이 불가능했지만 HTTP2부터는 가능해졌다.
+## 전송 계층 
 #### 데이터 단위
 - TCP 세그먼트 / UDP 데이터그램
 #### 하는 일
@@ -64,14 +65,14 @@ L2프레임 안에 L3패킷이 들어갈수 있고 L3패킷 안에는 L4 Tcp Seg
 - UDP
   - 오버헤드 작음, 손실/순서 보장 없음 → 앱 레벨에서 보정 필요(FEC, 재전송 로직)
 
-## 인터넷 계층 (Internet Layer) (L2)
+## 인터넷 계층 (Internet Layer) 
 #### 데이터 단위
 - 패킷(Packet)
 #### 하는 일
 - IP 주소 지정과 라우팅으로 패킷을 목적지 네트워크까지 전달
 - 최적 경로 선택, 단편화(IPv4), 오류/진단(ICMP)
 
-## 네트워크 접근 계층 (Network Access / Link + Physical) (L1)
+## 네트워크 접근 계층 (Network Access / Link + Physical) 
 #### 데이터 단위
 - 프레임(Frame) / 비트(Bit)
 #### 하는 일
@@ -81,3 +82,16 @@ L2프레임 안에 L3패킷이 들어갈수 있고 L3패킷 안에는 L4 Tcp Seg
 - MTU/MSS: 링크 MTU(보통 1500), 터널/암호화 시 오버헤드로 패킷 단편화/손실 가능
 - VLAN: 논리적 네트워크 분리, 태깅/트렁크 포트
 - Half/Full Duplex, 속도 협상: 링크 품질/충돌 도메인
+
+## BroadCast
+
+Broadcast란 해당 호스트와 네트워크망에 연결되어있는 모든 호스트에 신호를 보내는 것이다.
+
+- Broadcast의 반대는 Unicast
+- Broadcast 주소라는 매우 특별한 주소가 존재한다. (MAC, IP 모두 존재)
+
+브로드캐스팅의 범위를 좀게 해야하는 이유는 만약 어떤 host가 브로드캐스팅을 한다면 
+그동안 범위 안에 있는 모든 호스트들은 통신을 못하기 때문이다.
+
+MAC주소 기준으로는 48개의 비트가 전부 1이면 브로드캐스트 이고 IPv4는 호스트 비트가 전부 1이면 브로드캐스트 이다. 
+브로드캐스트의 범위는 라우터 안 LAN 영역이다. 

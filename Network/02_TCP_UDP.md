@@ -65,10 +65,10 @@ Client는 서버로부터 Sequence number을 받은 시점에서 부터 연결�
 <img src="./img/TCP_four_way_handshake.png">
 특별한 이유가 없다면 보통 Client가 연결과 연결종료를 주도한다.
 
-1. 연결을 끊겠다고 Client가 FIN+ACK를 보내고 자신의 상태를 FIN_WAIT1으로 바꾼다.
+1. 연결을 끊겠다고 Client가 FIN를 보내고 자신의 상태를 FIN_WAIT1으로 바꾼다.
 2. 그러면 요청을 받은 서버가 클라이언트의 종료 요청을 수락하면서  ACK를 보낸고 자신의 상태를 CLOSE_WAIT1으로 바꾼다.
 3. ACK를 받은 Client는 FIN_WAIT2 상태로 바뀐다.
-4. 이후에 Server측에서 FIN+ACK를 보내고 자신의 상태를 LAST_ACK로 바꾼다.
+4. 이후에 Server측에서 FIN를 보내고 자신의 상태를 LAST_WAIT로 바꾼다.
 5. 이후에 Client는 ACK를 보낸 뒤 TIME_WAIT상태에 들어갔다가 일정 시간이 지나면 종료된다.
 6. 마지막 ACK를 받은 서버는 신호를 받고 종료된다.
 
@@ -121,8 +121,18 @@ Client는 서버로부터 Sequence number을 받은 시점에서 부터 연결�
 | **게임**                    | 실시간 위치 갱신, 지연 최소화  |
 | **DHCP**                  | 단순 브로드캐스트 기반 통신    |
 
-
 “한두 개 패킷이 손실돼도 괜찮은” 서비스에서 UDP가 유리하다.
+
+> DNS가 계층구조를 사용하는 이유는 전 세계 모든 도메인을 한 서버가 관리한다는 것은 불가능 하기 때문이다. 따라서 여러 DNS서버가 분산하여 작업하며, 이름충돌도 방지할 수 있다.
+> ```
+>naver.com
+>naver.net
+>naver.co.kr
+>```
+>또한 계층별로 나누어져 있기 때문에 빠르게 탐색이 가능하다.
+
+
+
 
 ### UDP 헤더
 <img src="./img/UDP_Header.png">
