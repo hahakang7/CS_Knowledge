@@ -47,28 +47,35 @@ MVC2는 MVC1 패턴보다 구조가 복잡해질 수 있으나, 이러한 문제
 ## Spring MVC 구조
 
 **DispatcherServlet**
+
 - Front Controller의 역할을 수행하며 Request를 각각의 Controller에게 위임한다.
 - 가장 앞 단에서 클라이언트의 요청을 처리하는 Controller로써 요청부터 응답까지 전반적인 처리 과정을 통제한다.
 
 **HandlerMapping**
+
 - 요청을 직접 처리할 컨트롤러를 탐색한다.
 - 구체적인 Mapping은 xml파일이나 java config 관련 어노테이션 등을 통해 처리할 수 있다.
 
 **HandlerAdapter**
+
 매핑된 컨트롤러의 실행을 요청한다.
 
 **Controller**
+
 DispatcherServlet이 전달해준 HTTP 요청을 처리하고 결과를 Model에 저장한다.
 - 직접 요청을 처리하며, 처리 결과를 반환한다.
 - 결과가 반환되면 HandlerAdapter가 ModelAndView 객체로 변환되며, 여기에는 View Name과 같이 응답을 통해 보여줄 View에 대한 정보와 관련된 데이터가 포함되어 있다.
 
 **ModelAndView**
+
 ModelAndView는 Controller에 의해 반환된 Model과 View가 Wrapping된 객체이다.
 
 **View Resolver**
+
 View Name을 확인한 후, 실제 컨트롤러로부터 받은 로직 처리 결과를 반영할 View 파일(jsp)을 탐색한다.
 
 **View**
+
 로직 처리 결과를 반영한 최종 화면을 생성한다.
 
 <img width="800px" src="./img/MVCstr.png">
