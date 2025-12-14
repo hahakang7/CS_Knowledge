@@ -280,9 +280,11 @@ fresh 기간이 끝났어도 바로 폐기하지 않는다.
 <img width="700px" src="./img/httpcache.png">
 
 **Private Cache**
+
 웹 브라우저에 저장되는 캐시로, 다른 사람이 접근할 수 없다. 단 서버 응답에 Authorization 헤더가 포함되어 있다면 Private Cache에 저장되지 않는다.
  
 **Shared Cache**
+
 웹 브라우저와 서버 사이에서 동작하는 캐시이다. Proxy Cache와 Managed Cache로 나뉜다.
 
 **Proxy Cache**
