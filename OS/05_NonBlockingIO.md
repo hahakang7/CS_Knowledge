@@ -46,15 +46,15 @@ Blocking I/O와 Non-Blocking I/O는 동기(Synchronous), 비동기(Asynchronous)
 
 ---
 
-## 동기(Synchronous) VS 비동기(Asynchronous)
+## 동기 (Synchronous) VS 비동기 (Asynchronous)
 
-### 동기(Synchronous)
+### 동기 (Synchronous)
 
 프로세스의 작업을 직렬화하여 수행하는 방식이다.  
 한 작업이 완전히 수행될 때까지 다른 작업은 대기 상태이며, 작업이 완료된 이후에 다음 작업을 수행한다.  
 요청을 보내고 반드시 응답을 받아야 다음 작업으로 진행한다.
 
-### 비동기(Asynchronous)
+### 비동기 (Asynchronous)
 
 프로세스의 작업을 병렬적으로 수행하는 방식이다.  
 요청을 보낸 이후 응답을 기다리지 않고 다음 작업을 수행할 수 있다.
@@ -93,12 +93,49 @@ Non-Blocking I/O에서는 I/O 결과가 즉시 반환되지 않는다.
 
 ---
 
-## read/write O_NONBLOCK
-
-Non-Blocking과 Synchronous는 일반적으로 함께 사용되기 어렵지만, 상황에 따라 의미가 달라질 수 있다.
+## read / write O_NONBLOCK
 
 O_NONBLOCK는 파일 디스크립터를 Non-Blocking 모드로 설정하는 옵션이다.  
 C 언어의 open 함수에서 해당 플래그를 사용할 수 있다.
 
-```java
-int fd = open("example.txt", O_RDONLY | O_NONBLOCK);
+예시:
+
+    int fd = open("example.txt", O_RDONLY | O_NONBLOCK);
+
+이렇게 설정하면 해당 파일 디스크립터에 대한 read, write 호출은 I/O가 완료되지 않았더라도 즉시 반환된다.
+
+---
+
+## Asynchronous Blocking I/O
+
+- Blocking: 제어권이 없으므로 I/O가 끝날 때까지 다른 작업을 수행할 수 없다.
+- Asynchronous: 결과 처리 여부가 필수가 아니다.
+
+I/O 결과를 즉시 처리하지 않을 것이라면, I/O가 끝날 때까지 대기하는 방식은 비효율적이다.  
+이 방식은 실제로 거의 사용되지 않으며, 설계 실수로 발생하는 경우가 많다.
+
+<img src="./img/AsynchronousBlocking.png">
+
+---
+
+## I/O Multiplexing
+
+- 하나의 스레드가 여러 개의 입출력 소켓을 감시하는 기술이다.
+- 어떤 소켓에서 I/O 이벤트가 발생했는지를 감시한다.
+- 여러 소켓이 이벤트를 발생시킬 때까지 블로킹되지 않고 대기한다.
+- 단일 스레드에서 다수의 소켓 I/O를 처리할 수 있다.
+- select, poll과 같은 함수를 사용한다.
+- 다수의 클라이언트를 효율적으로 처리할 수 있어 서버 프로그램에서 널리 사용된다.
+
+---
+
+## Asynchronous Non-Blocking I/O (AIO)
+
+- Non-Blocking: I/O 작업 수행 중에도 스레드는 다른 작업을 수행한다.
+- Asynchronous: 결과 처리가 필수가 아니다.
+
+I/O 요청은 즉시 반환되며, I/O 작업은 백그라운드에서 수행된다.  
+작업이 완료되면 시그널이나 콜백, 또는 별도의 스레드를 통해 결과를 처리한다.
+
+<img src="./img/AsynchronousNon-Blocking.png">
+
