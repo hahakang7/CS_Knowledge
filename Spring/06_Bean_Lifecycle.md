@@ -90,7 +90,7 @@ public class TestBean {
 
 클래스 내부 코드가 아닌, 설정하는 곳(Configuration)에서 지정하기 때문에 내부 코드를 고칠 수 없는 경우에 유용하다. 
 
-```
+``` java
 @Configuration
 class TestLifeCycleConfig {
 
