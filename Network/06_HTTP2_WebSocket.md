@@ -56,8 +56,8 @@ HTTP/1.1에서는 HTTP 요청와 응답은 통짜 텍스트 Message 단위로 �
 HTTP/2 로 오면서 Message라는 단위 외에 Frame, Stream이라는 단위가 추가되었다.
 
 **Frame** : HTTP/2에서 통신의 최소 단위이며, Header 혹은 Data 가 들어있다. 
-**Message** : HTTP/1.1과 마찬가지로 요청 혹은 응답의 단위이며 다수의 Frame으로 이루어진 배열 라인
-**Stream** : 연결된 Connection 내에서 양방향으로 Message를 주고 받는 하나의 흐름
+**Message** : HTTP/1.1과 마찬가지로 요청 혹은 응답의 단위이며 다수의 Frame으로 이루어진 배열 라인  
+**Stream** : 연결된 Connection 내에서 양방향으로 Message를 주고 받는 하나의 흐름  
 
 즉, HTTP/2 는 HTTP 요청을 여러개의 Frame들로 나누고, 이 frame들이 모여 요청/응답 Message가 되고, 그리고 Message는 특정 Stream에 속하게 되고, 여러개의 Stream은 하나의 Connection에 속하게 되는 구조이다.
 
